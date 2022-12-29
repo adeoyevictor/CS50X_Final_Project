@@ -1,0 +1,5 @@
+{% extends 'layout.html' %} {% block content %}
+<h2 class="">{% block title %} {{ post['title'] }} {% endblock %}</h2>
+<span>{{ post['created'][:10] }} By: {{ post['username'] }}</span>
+<p class="bg-secondary p-3 my-3 rounded text-white overflow-auto">{{ post['content'] }}</p>
+{% endblock %}
