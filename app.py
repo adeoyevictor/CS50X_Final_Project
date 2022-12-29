@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, render_template, request, url_for, flash, redirect, session
 from werkzeug.exceptions import abort
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_session import Session
+# from flask_session import Session
 from helpers import login_required
 
 def get_db_connection():
@@ -23,7 +23,16 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '6c89336bd226723485d418d19d930ad97092448b403769bcfefc18872dcff517'
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
+# Session(app)
+
+@app.route('/git_update', methods=['POST'])
+def git_update():
+    repo = git.Repo('./orbe')
+    origin = repo.remotes.origin
+    repo.create_head('main',
+                     origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
+    origin.pull()
+    return '', 200
 
 @app.route('/')
 @login_required
