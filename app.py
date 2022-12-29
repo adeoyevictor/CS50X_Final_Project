@@ -34,7 +34,6 @@ def index():
     conn.close()
     return render_template("index.html", posts=posts)
 
-
 @app.route('/<int:post_id>')
 @login_required
 def post(post_id):
